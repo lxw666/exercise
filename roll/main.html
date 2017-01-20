@@ -64,6 +64,13 @@
 		i = 1,
 		timer;
 
+	(function(){
+		getUl.style.width = getLiWidth * getLi.length + 'px';
+		startRoll();
+		getPre.onclick = pre;
+		getNext.onclick = next;
+	})();
+
 	function setGetUlMarginLeft(){
 		if(i < getLi.length){
 			getUl.style.marginLeft = -getLiWidth * i + 'px';
@@ -102,12 +109,6 @@
 		}
 		startRoll();
 	}
-	(function(){
-		getUl.style.width = getLiWidth * getLi.length + 'px';
-		startRoll();
-		getPre.onclick = pre;
-		getNext.onclick = next;
-	})()
 </script>
 </body>
 </html>
