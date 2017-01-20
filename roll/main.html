@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body,ul,li{
+			margin: 0;
+			padding: 0;
+		}
+		.roll{
+			width: 600px;
+			height: 300px;
+			margin: 50px auto 0;
+			position: relative;
+			overflow: hidden;
+		}
+		ul{
+			position: relative;
+		}
+		li{
+			width: 600px;
+			height: 300px;
+			float: left;
+			list-style: none;
+		}
+		.pre,.next{
+			width: 50px;
+			height: 20px;
+			color: #fff;
+			line-height: 20px;
+			background: #ce7900;
+			display: block;
+			position: absolute;
+			cursor: pointer;
+			z-index: 100;
+		}
+		.pre{
+			left: 100px;
+		}
+		.next{
+			right: 100px;
+		}
+	</style>
+</head>
+<body>
+	<div class="roll">
+		<a class="pre" id="pre">上一个</a>
+		<a class="next" id="next">下一个</a>
+		<ul id="ul">
+			<li><img src="red.jpg" alt=""></li>
+			<li><img src="blue.jpg" alt=""></li>
+			<li><img src="green.jpg" alt=""></li>
+		</ul>
+	</div>
+<script>
+	var $ = document,
+		getUl = $.getElementsByTagName('ul')[0],
+		getLi = $.getElementsByTagName('li'),
+		getPre = $.getElementById('pre'),
+		getNext = $.getElementById('next'),
+		getLiWidth = getLi[0].clientWidth,
+		delayTime = 3000,
+		i = 1,
+		timer;
+
+	function setGetUlMarginLeft(){
+		if(i < getLi.length){
+			getUl.style.marginLeft = -getLiWidth * i + 'px';
+			i++;
+		}else{
+			getUl.style.marginLeft = 0;
+			i = 1;
+		}
+	}
+	function startRoll(){
+		timer = setInterval('setGetUlMarginLeft()',delayTime);
+	}
+	function stopRoll(){
+		clearInterval(timer);
+	}
+	function pre(){
+		stopRoll();
+		if(i==1){
+			getUl.style.marginLeft = getLiWidth * (1-getLi.length) + 'px';
+			i = getLi.length;
+		}
+		else{
+			getUl.style.marginLeft = -getLiWidth * Math.abs(i-2) + 'px';
+			i--;
+		}
+		startRoll();
+	}
+	function next(){
+		stopRoll();
+		if(i==getLi.length){
+			getUl.style.marginLeft = 0;
+			i = 1;
+		}else{
+			getUl.style.marginLeft = -getLiWidth * i  + 'px';
+			i++;
+		}
+		startRoll();
+	}
+	(function(){
+		getUl.style.width = getLiWidth * getLi.length + 'px';
+		startRoll();
+		getPre.onclick = pre;
+		getNext.onclick = next;
+	})()
+</script>
+</body>
+</html>
